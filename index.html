@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f0f12">
+<link rel="manifest" href="manifest.json">
+<title>VIDA ORGANIZADA – THAY</title>
+
+<style>
+body{
+margin:0;
+font-family:system-ui;
+background:#0f0f12;
+}
+
+.container{
+max-width:480px;
+margin:auto;
+padding:20px;
+}
+
+h1{
+color:#F8D7E3;
+text-align:center;
+}
+
+h2{
+color:#E8CFC1;
+margin-bottom:10px;
+}
+
+.card{
+background:#ffffff;
+padding:18px;
+border-radius:22px;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+margin-bottom:20px;
+}
+
+button{
+background:#d8a7b1;
+border:none;
+padding:12px;
+border-radius:14px;
+color:#fff;
+font-weight:600;
+width:100%;
+margin-top:10px;
+}
+
+input{
+padding:10px;
+border-radius:12px;
+border:1px solid #ddd;
+width:100%;
+margin-top:5px;
+margin-bottom:10px;
+}
+
+.progress{
+height:8px;
+background:#eee;
+border-radius:10px;
+overflow:hidden;
+margin-top:6px;
+}
+
+.progress div{
+height:8px;
+background:#d8a7b1;
+width:0%;
+transition:0.3s;
+}
+
+.nav{
+display:flex;
+gap:6px;
+margin-bottom:15px;
+}
+
+.nav button{
+flex:1;
+font-size:11px;
+padding:10px 4px;
+}
+
+.hidden{
+display:none;
+}
+
+.green{color:green;font-weight:bold;}
+.red{color:red;font-weight:bold;}
+
+.task{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:6px;
+font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="login" class="container">
+<h1>VIDA ORGANIZADA – THAY</h1>
+<div class="card">
+<h2>Senha</h2>
+<input type="password" maxlength="4" id="password">
+<button onclick="checkPassword()">Entrar</button>
+</div>
+</div>
+
+<div id="app" class="container hidden">
+
+<div class="nav">
+<button onclick="showTab(1)">Dashboard</button>
+<button onclick="showTab(2)">Treino</button>
+<button onclick="showTab(3)">Rotina</button>
+<button onclick="showTab(4)">Beleza</button>
+</div>
+
+<div id="tab1">
+
+<div class="card">
+<h2>Saúde</h2>
+<label>Peso atual</label>
+<input id="pesoAtual" type="number">
+<label>Meta de peso</label>
+<input id="metaPeso" type="number">
+<p>Altura fixa: 1,64</p>
+<p>IMC: <span id="imc"></span></p>
+<p>Progresso até meta: <span id="progressoPeso"></span>%</p>
+<div class="progress"><div id="barraPeso"></div></div>
+</div>
+
+<div class="card">
+<h2>Água 2,5L</h2>
+<input id="agua" type="number" step="0.1" placeholder="Litros consumidos">
+<div class="progress"><div id="barraAgua"></div></div>
+</div>
+
+</div>
+
+<div id="tab2" class="hidden">
+<div class="card">
+<h2>Treino Segunda – Glúteo</h2>
+
+<div class="task"><span>Agachamento 3x12</span><input type="checkbox" data-id="t1"></div>
+<div class="task"><span>Flexora 3x12</span><input type="checkbox" data-id="t2"></div>
+<div class="task"><span>Elevação pélvica 3x15</span><input type="checkbox" data-id="t3"></div>
+<div class="task"><span>Avanço 3x10</span><input type="checkbox" data-id="t4"></div>
+<div class="task"><span>Abdução 3x15</span><input type="checkbox" data-id="t5"></div>
+<div class="task"><span>Stiff 3x12</span><input type="checkbox" data-id="t6"></div>
+
+<p>Conclusão: <span id="treinoPercent"></span>%</p>
+<div class="progress"><div id="barraTreino"></div></div>
+</div>
+</div>
+
+<div id="tab3" class="hidden">
+<div class="card">
+<h2>Rotina Segunda</h2>
+
+<div class="task"><span>05:00 – Acordar</span><input type="checkbox" data-id="r1"></div>
+<div class="task"><span>05:20 – Caminhada</span><input type="checkbox" data-id="r2"></div>
+<div class="task"><span>06:00 – Academia</span><input type="checkbox" data-id="r3"></div>
+<div class="task"><span>07:00 – Arrumar + Pietro + Café</span><input type="checkbox" data-id="r4"></div>
+<div class="task"><span>07:30 – Trabalho</span><input type="checkbox" data-id="r5"></div>
+<div class="task"><span>08:00 – Medicações</span><input type="checkbox" data-id="r6"></div>
+<div class="task"><span>10:00 – Lanche</span><input type="checkbox" data-id="r7"></div>
+<div class="task"><span>12:30 – Almoço + Glifage</span><input type="checkbox" data-id="r8"></div>
+<div class="task"><span>13:00 – Cochilo</span><input type="checkbox" data-id="r9"></div>
+<div class="task"><span>16:00 – Lanche</span><input type="checkbox" data-id="r10"></div>
+<div class="task"><span>18:00 – Fim trabalho</span><input type="checkbox" data-id="r11"></div>
+<div class="task"><span>19:00 – Estudo faculdade</span><input type="checkbox" data-id="r12"></div>
+<div class="task"><span>20:00 – Vit C + Ferro</span><input type="checkbox" data-id="r13"></div>
+<div class="task"><span>22:30 – Dormir</span><input type="checkbox" data-id="r14"></div>
+
+</div>
+</div>
+
+<div id="tab4" class="hidden">
+<div class="card">
+<h2>Beleza & Organização</h2>
+
+<div class="task"><span>Unha (Quinzenal)</span><input type="checkbox" data-id="b1"></div>
+<div class="task"><span>Depilação (Mensal)</span><input type="checkbox" data-id="b2"></div>
+<div class="task"><span>Exames (Semestral)</span><input type="checkbox" data-id="b3"></div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+if('serviceWorker' in navigator){
+navigator.serviceWorker.register('service-worker.js')
+}
+
+let senha=localStorage.getItem('senha')||'1804'
+
+function checkPassword(){
+let input=document.getElementById('password').value
+if(input===senha){
+document.getElementById('login').classList.add('hidden')
+document.getElementById('app').classList.remove('hidden')
+}else{
+alert('Senha incorreta')
+}
+}
+
+function showTab(n){
+document.querySelectorAll('[id^="tab"]').forEach(t=>t.classList.add('hidden'))
+document.getElementById('tab'+n).classList.remove('hidden')
+}
+
+function salvarDados(){
+localStorage.setItem('pesoAtual',pesoAtual.value)
+localStorage.setItem('metaPeso',metaPeso.value)
+localStorage.setItem('agua',agua.value)
+calcular()
+}
+
+function calcular(){
+let peso=parseFloat(pesoAtual.value)||0
+let meta=parseFloat(metaPeso.value)||0
+
+if(peso>0){
+let imc=peso/(1.64*1.64)
+document.getElementById('imc').innerText=imc.toFixed(2)
+}
+
+if(peso>0 && meta>0){
+let prog=((peso-meta)/peso)*100
+document.getElementById('progressoPeso').innerText=prog.toFixed(0)
+document.getElementById('barraPeso').style.width=prog+'%'
+}
+
+let aguaVal=parseFloat(agua.value)||0
+let perc=(aguaVal/2.5)*100
+document.getElementById('barraAgua').style.width=perc+'%'
+}
+
+document.querySelectorAll('input[type="checkbox"]').forEach(cb=>{
+let id=cb.dataset.id
+cb.checked=localStorage.getItem(id)==='true'
+cb.addEventListener('change',()=>{
+localStorage.setItem(id,cb.checked)
+calcularTreino()
+})
+})
+
+function calcularTreino(){
+let total=6
+let feitos=0
+for(let i=1;i<=6;i++){
+if(localStorage.getItem('t'+i)==='true') feitos++
+}
+let perc=(feitos/total)*100
+document.getElementById('treinoPercent').innerText=perc.toFixed(0)
+document.getElementById('barraTreino').style.width=perc+'%'
+}
+
+pesoAtual.value=localStorage.getItem('pesoAtual')||''
+metaPeso.value=localStorage.getItem('metaPeso')||''
+agua.value=localStorage.getItem('agua')||''
+
+pesoAtual.oninput=salvarDados
+metaPeso.oninput=salvarDados
+agua.oninput=salvarDados
+
+calcular()
+calcularTreino()
+</script>
+
+</body>
+</html>
