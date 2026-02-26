@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f0f12">
+<link rel="manifest" href="manifest.json">
+<title>VIDA ORGANIZADA – THAY</title>
+
+<style>
+body{
+margin:0;
+font-family:system-ui;
+background:#0f0f12;
+color:#000;
+}
+
+.container{
+max-width:480px;
+margin:auto;
+padding:20px;
+}
+
+h1{
+color:#F8D7E3;
+text-align:center;
+}
+
+h2{
+color:#E8CFC1;
+}
+
+.card{
+background:#fff;
+padding:16px;
+border-radius:20px;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+margin-bottom:16px;
+}
+
+button{
+background:#d8a7b1;
+border:none;
+padding:10px 16px;
+border-radius:12px;
+color:#fff;
+font-weight:600;
+width:100%;
+margin-top:10px;
+}
+
+input{
+padding:8px;
+border-radius:10px;
+border:1px solid #ccc;
+width:100%;
+margin-top:5px;
+margin-bottom:10px;
+}
+
+.progress{
+height:8px;
+background:#eee;
+border-radius:10px;
+margin-top:6px;
+}
+
+.progress div{
+height:8px;
+border-radius:10px;
+background:#d8a7b1;
+width:0%;
+transition:0.3s;
+}
+
+.hidden{
+display:none;
+}
+
+.nav{
+display:flex;
+justify-content:space-around;
+margin-bottom:16px;
+}
+
+.nav button{
+flex:1;
+margin:4px;
+font-size:12px;
+}
+
+.green{
+color:green;
+font-weight:bold;
+}
+
+.red{
+color:red;
+font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div id="login" class="container">
+<h1>VIDA ORGANIZADA – THAY</h1>
+<div class="card">
+<h2>Senha</h2>
+<input type="password" maxlength="4" id="password">
+<button onclick="checkPassword()">Entrar</button>
+</div>
+</div>
+
+<div id="app" class="container hidden">
+
+<div class="nav">
+<button onclick="showTab(1)">Dashboard</button>
+<button onclick="showTab(2)">Treino</button>
+<button onclick="showTab(3)">Rotina</button>
+<button onclick="showTab(4)">Beleza</button>
+</div>
+
+<div id="tab1" class="tab">
+<div class="card">
+<h2>Saúde</h2>
+
+<label>Peso atual</label>
+<input id="pesoAtual" type="number">
+
+<label>Meta de peso</label>
+<input id="metaPeso" type="number">
+
+<p>Altura fixa: 1,64</p>
+<p>IMC: <span id="imc"></span></p>
+<p>Progresso até meta: <span id="progressoPeso"></span>%</p>
+
+<div class="progress">
+<div id="barraPeso"></div>
+</div>
+</div>
+</div>
+
+<div id="tab2" class="tab hidden">
+<div class="card">
+<h2>Meta Água 2,5L</h2>
+<input id="agua" type="number" step="0.1" placeholder="Litros consumidos">
+<div class="progress">
+<div id="barraAgua"></div>
+</div>
+</div>
+</div>
+
+<div id="tab3" class="tab hidden">
+<div class="card">
+<h2>Rotina Segunda (teste)</h2>
+<label><input type="checkbox" id="rot1"> 05:00 – Acordar</label><br>
+<label><input type="checkbox" id="rot2"> 06:00 – Academia</label>
+</div>
+</div>
+
+<div id="tab4" class="tab hidden">
+<div class="card">
+<h2>Beleza & Organização</h2>
+<label><input type="checkbox" id="bel1"> Unha</label><br>
+<label><input type="checkbox" id="bel2"> Depilação</label>
+</div>
+</div>
+
+</div>
+
+<script>
+if('serviceWorker' in navigator){
+navigator.serviceWorker.register('service-worker.js')
+}
+
+let senha=localStorage.getItem('senha')||'1804'
+
+function checkPassword(){
+let input=document.getElementById('password').value
+if(input===senha){
+document.getElementById('login').classList.add('hidden')
+document.getElementById('app').classList.remove('hidden')
+}else{
+alert('Senha incorreta')
+}
+}
+
+function showTab(n){
+document.querySelectorAll('.tab').forEach(t=>t.classList.add('hidden'))
+document.getElementById('tab'+n).classList.remove('hidden')
+}
+
+function salvar(){
+localStorage.setItem('pesoAtual',pesoAtual.value)
+localStorage.setItem('metaPeso',metaPeso.value)
+localStorage.setItem('agua',agua.value)
+calcular()
+}
+
+function calcular(){
+let peso=parseFloat(pesoAtual.value)||0
+let meta=parseFloat(metaPeso.value)||0
+
+if(peso>0){
+let imcCalc=peso/(1.64*1.64)
+document.getElementById('imc').innerText=imcCalc.toFixed(2)
+
+if(meta>0){
+let prog=((peso-meta)/peso)*100
+document.getElementById('progressoPeso').innerText=prog.toFixed(0)
+document.getElementById('barraPeso').style.width=prog+'%'
+}
+}
+
+let aguaVal=parseFloat(agua.value)||0
+let perc=(aguaVal/2.5)*100
+document.getElementById('barraAgua').style.width=perc+'%'
+}
+
+pesoAtual.value=localStorage.getItem('pesoAtual')||''
+metaPeso.value=localStorage.getItem('metaPeso')||''
+agua.value=localStorage.getItem('agua')||''
+
+pesoAtual.oninput=salvar
+metaPeso.oninput=salvar
+agua.oninput=salvar
+
+calcular()
+</script>
+
+</body>
+</html>
