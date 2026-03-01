@@ -1,10 +1,11 @@
 {
   "name": "VIDA ORGANIZADA – THAY",
   "short_name": "THAY",
-  "start_url": "./index.html",
+  "start_url": "/index.html",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#0f0f12",
-  "theme_color": "#0f0f12",
+  "background_color": "#fff8fc",
+  "theme_color": "#ff4fa3",
   "orientation": "portrait",
   "icons": [
     {
