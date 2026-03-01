@@ -1,26 +1,22 @@
-const CACHE_NAME = "vida-organizada-thay-v1";
+/* =========================
+   VIDA ORGANIZADA – THAY
+   Service Worker
+========================= */
+
+const CACHE_NAME = "thay-app-v1";
 
 const urlsToCache = [
-  "./",
-  "./index.html",
-  "./manifest.json"
+  "/",
+  "/index.html",
+  "/manifest.json",
+  "/icon-192.png",
+  "/icon-512.png"
 ];
 
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => {
-        return cache.addAll(urlsToCache);
-      })
-  );
-});
-
-self.addEventListener("fetch", event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        return response || fetch(event.request);
-      })
+      .then(cache => cache.addAll(urlsToCache))
   );
 });
 
@@ -35,5 +31,14 @@ self.addEventListener("activate", event => {
         })
       );
     })
+  );
+});
+
+self.addEventListener("fetch", event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        return response || fetch(event.request);
+      })
   );
 });
